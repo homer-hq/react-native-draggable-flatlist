@@ -851,7 +851,10 @@ type RowItemProps = {
   onUnmount: () => void
 }
 
-class RowItem extends React.PureComponent<RowItemProps> {
+class RowItem extends React.Component<RowItemProps> {
+  shouldComponentUpdate() {
+    return true;
+  }
 
   drag = () => {
     const { drag, renderItem, item, keyToIndex, itemKey } = this.props
