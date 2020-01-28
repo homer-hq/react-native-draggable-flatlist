@@ -21,6 +21,8 @@ import {
 } from './procs'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
+const isAndroid = Platform.OS === 'android';
+const isIOS = Platform.OS === 'ios';
 
 const {
   Value,
@@ -537,7 +539,7 @@ class DraggableFlatList<T> extends React.Component<Props<T>, State> {
     const distFromEdge = scrollUp ? distFromTop : distFromBottom
     const speedPct = 1 - (distFromEdge / autoscrollThreshold)
     // Android scroll speed seems much faster than ios
-    const speed = Platform.OS === "ios" ? autoscrollSpeed : autoscrollSpeed / 10
+    const speed = isIOS ? autoscrollSpeed : autoscrollSpeed / 10
     const offset = speedPct * speed
     const targetOffset = scrollUp ? Math.max(0, scrollOffset - offset) : scrollOffset + offset
     return targetOffset
@@ -804,6 +806,7 @@ class DraggableFlatList<T> extends React.Component<Props<T>, State> {
       <TapGestureHandler
         ref={this.tapGestureHandlerRef}
         onHandlerStateChange={this.onContainerTapStateChange}
+        maxDurationMs={isAndroid ? 10 : undefined}
       >
         <Animated.View style={styles.flex}>
           <PanGestureHandler
