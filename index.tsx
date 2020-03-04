@@ -89,6 +89,7 @@ type Props<T> = Modify<VirtualizedListProps<T>, {
     isActive: boolean,
   }) => JSX.Element
   animationConfig: Partial<Animated.SpringConfig>,
+  tapGestureHandlerDuration?: number,
 }>
 
 type State = {
@@ -800,12 +801,13 @@ class DraggableFlatList<T> extends React.Component<Props<T>, State> {
   }
 
   render() {
-    const { scrollEnabled } = this.props
+    const { scrollEnabled, tapGestureHandlerDuration } = this.props
     const { hoverComponent } = this.state
     return (
       <TapGestureHandler
         ref={this.tapGestureHandlerRef}
         onHandlerStateChange={this.onContainerTapStateChange}
+        maxDurationMs={tapGestureHandlerDuration}
       >
         <Animated.View style={styles.flex}>
           <PanGestureHandler
