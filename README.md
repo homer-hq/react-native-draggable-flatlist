@@ -29,6 +29,8 @@ Name | Type | Description
 `onRef` | `(ref: React.RefObject<DraggableFlatList<T>>) => void` |  Returns underlying Animated FlatList ref.
 `animationConfig` | `Partial<Animated.SpringConfig>` |  Configure list animations. See [reanimated spring config](https://github.com/software-mansion/react-native-reanimated/blob/master/react-native-reanimated.d.ts#L112-L120)
 `maxDurationMs` | `number` | Configure `TapGestureHandler` wrapper. See description [there](https://software-mansion.github.io/react-native-gesture-handler/docs/handler-tap.html#maxdurationms)
+`minPanY` | `number` | y coordinate for top padding for panGesture event handler (works only at mounting)
+`maxPanY` | `number` | y coordinate for bottom padding for panGesture event handler (works only at mounting)
 
 ## Example
 

@@ -49,6 +49,7 @@ const {
   spring,
   defined,
   max,
+  min,
   debug,
 } = Animated
 
@@ -672,6 +673,17 @@ class DraggableFlatList<T> extends React.Component<Props<T>, State> {
     }
   ])
 
+  getRestrictedY = (y) => {
+    if (this.props.minPanY > 0 && this.props.maxPanY > 0) {
+      const minY = new Value(this.props.minPanY);
+      const maxY = new Value(this.props.maxPanY);
+
+      return max(min(y, maxY), minY);
+    }
+
+    return y;
+  }
+
   onPanGestureEvent = event([
     {
       nativeEvent: ({ x, y }) => block([
@@ -682,7 +694,7 @@ class DraggableFlatList<T> extends React.Component<Props<T>, State> {
             not(this.disabled),
           ), [
           cond(not(this.hasMoved), set(this.hasMoved, 1)),
-          set(this.touchAbsolute, this.props.horizontal ? x : y),
+          set(this.touchAbsolute, this.props.horizontal ? x : this.getRestrictedY(y)),
           onChange(this.touchAbsolute, this.checkAutoscroll),
         ]),
       ]),
